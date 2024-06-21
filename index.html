@@ -16,7 +16,7 @@
             height: 100vh;
         }
         .container {
-            max-width: 400px;
+            max-width: 500px;
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -25,18 +25,20 @@
             transition: transform 0.3s ease;
         }
         .coin-symbol {
-            font-size: 64px;
+            width: 200px;
+            height: 200px;
+            background-image: url('https://example.com/coin-image.png'); /* Buraya kocaman coin görselinin URL'sini ekleyin */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 50%;
             margin-bottom: 20px;
-            color: #f39c12;
-            animation: spin 3s linear infinite;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.1s ease;
         }
-        @keyframes spin {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
+        .coin-symbol:hover {
+            transform: scale(1.1);
         }
         .coin-info {
             font-size: 24px;
@@ -72,66 +74,23 @@
             padding-right: 10px;
             transition: width 1s ease;
         }
-        .play-button {
-            background-color: #3498db;
-            color: white;
-            padding: 15px 30px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 18px;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-        .play-button:hover {
-            background-color: #2980b9;
-        }
-        .follow-instagram {
-            margin-top: 20px;
-        }
-        .follow-instagram a {
-            display: inline-block;
-            margin-right: 10px;
-        }
-        .footer {
-            position: fixed;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 14px;
-            color: #aaa;
-        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="coin-symbol">&#x1F4B0;</div>
+        <div class="coin-symbol" onclick="earnCoin()"></div>
         <div class="coin-info">
             <p><strong>Toplam Coin Miktarı:</strong> <span id="coin-amount">0</span></p>
             <div class="progress-bar">
                 <div class="progress">0%</div>
             </div>
         </div>
-        <button class="play-button" onclick="playGame()">Oyun Oyna</button>
-
-        <div class="follow-instagram">
-            <a href="https://www.instagram.com/berkayivecen_?igsh=MXZiZWY4NGc4ZzJkYw==" target="_blank" title="Instagram">
-                <img src="instagram.png" alt="Instagram" width="30" height="30">
-            </a>
-        </div>
-    </div>
-
-    <div class="footer">
-        &copy; 2024 - Tüm Hakları Saklıdır
     </div>
 
     <script>
-        function playGame() {
+        function earnCoin() {
             var currentCoins = parseInt(document.getElementById('coin-amount').textContent);
-            var earnedCoins = Math.floor(Math.random() * 3) + 1; // Daha zorlaştırıldı
-            var totalCoins = currentCoins + earnedCoins;
+            var totalCoins = currentCoins + 1;
             document.getElementById('coin-amount').textContent = totalCoins;
             
             // İlerleme çubuğunu güncelle
@@ -139,25 +98,15 @@
             var progressWidth = (totalCoins / 100) * 100; // Örnek: %100 hedef
             progressBar.style.width = progressWidth + '%';
             
-            alert('Tebrikler! ' + earnedCoins + ' coin kazandınız!');
+            // Görsel efektler
+            var coinSymbol = document.querySelector('.coin-symbol');
+            coinSymbol.style.transform = 'scale(1.1)';
+            setTimeout(function() {
+                coinSymbol.style.transform = 'scale(1)';
+            }, 100);
+
+            alert('Tebrikler! 1 coin kazandınız!');
         }
-
-        var instagramFollowed = false;
-
-        // Instagram takip fonksiyonu
-        document.querySelector('.follow-instagram a').addEventListener('click', function(event) {
-            event.preventDefault();
-            if (!instagramFollowed) {
-                instagramFollowed = true;
-                var currentCoins = parseInt(document.getElementById('coin-amount').textContent);
-                var totalCoins = currentCoins + 5000; // Instagram takip ödülü
-                document.getElementById('coin-amount').textContent = totalCoins;
-
-                alert('Instagram hesabımızı takip ettiğiniz için 5000 coin kazandınız!');
-            } else {
-                alert('Zaten Instagram hesabımızı takip ediyorsunuz!');
-            }
-        });
     </script>
 </body>
 </html>
