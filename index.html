@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>coinnbot</title>
+    <title>Oyun Coinleri</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -63,7 +63,7 @@
             overflow: hidden;
         }
         .progress {
-            width: 50%; /* Örneğin, kullanıcının %50'si hedefine ulaştığında */
+            width: 0%;
             background-color: #4caf50;
             height: 100%;
             text-align: right;
@@ -88,40 +88,12 @@
         .play-button:hover {
             background-color: #2980b9;
         }
-        .earn-coins {
-            margin-top: 30px;
-            animation: slideInDown 1s ease;
+        .follow-instagram {
+            margin-top: 20px;
         }
-        @keyframes slideInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .earn-coins input {
-            width: 200px;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            outline: none;
-        }
-        .earn-coins button {
-            background-color: #27ae60;
-            color: white;
-            padding: 10px 20px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .earn-coins button:hover {
-            background-color: #219f56;
+        .follow-instagram a {
+            display: inline-block;
+            margin-right: 10px;
         }
         .footer {
             position: fixed;
@@ -137,17 +109,17 @@
     <div class="container">
         <div class="coin-symbol">&#x1F4B0;</div>
         <div class="coin-info">
-            <p><strong>Toplam Coin Miktarı:</strong> <span id="coin-amount">50</span></p>
+            <p><strong>Toplam Coin Miktarı:</strong> <span id="coin-amount">0</span></p>
             <div class="progress-bar">
-                <div class="progress" style="width: 50%;">50%</div>
+                <div class="progress">0%</div>
             </div>
         </div>
         <button class="play-button" onclick="playGame()">Oyun Oyna</button>
-        
-        <div class="earn-coins">
-            <h3>Ekstra Coin Kazan</h3>
-            <input type="number" id="earnAmount" placeholder="Coin miktarı">
-            <button onclick="earnCoins()">Kazan</button>
+
+        <div class="follow-instagram">
+            <a href="https://www.instagram.com/berkayivecen_?igsh=MXZiZWY4NGc4ZzJkYw==" target="_blank" title="Instagram">
+                <img src="instagram.png" alt="Instagram" width="30" height="30">
+            </a>
         </div>
     </div>
 
@@ -158,11 +130,11 @@
     <script>
         function playGame() {
             var currentCoins = parseInt(document.getElementById('coin-amount').textContent);
-            var earnedCoins = Math.floor(Math.random() * 10) + 1;
+            var earnedCoins = Math.floor(Math.random() * 3) + 1; // Daha zorlaştırıldı
             var totalCoins = currentCoins + earnedCoins;
             document.getElementById('coin-amount').textContent = totalCoins;
             
-            // Örnek ilerleme çubuğu güncellemesi
+            // İlerleme çubuğunu güncelle
             var progressBar = document.querySelector('.progress');
             var progressWidth = (totalCoins / 100) * 100; // Örnek: %100 hedef
             progressBar.style.width = progressWidth + '%';
@@ -170,23 +142,22 @@
             alert('Tebrikler! ' + earnedCoins + ' coin kazandınız!');
         }
 
-        function earnCoins() {
-            var earnAmount = parseInt(document.getElementById('earnAmount').value);
-            if (!isNaN(earnAmount) && earnAmount > 0) {
+        var instagramFollowed = false;
+
+        // Instagram takip fonksiyonu
+        document.querySelector('.follow-instagram a').addEventListener('click', function(event) {
+            event.preventDefault();
+            if (!instagramFollowed) {
+                instagramFollowed = true;
                 var currentCoins = parseInt(document.getElementById('coin-amount').textContent);
-                var totalCoins = currentCoins + earnAmount;
+                var totalCoins = currentCoins + 5000; // Instagram takip ödülü
                 document.getElementById('coin-amount').textContent = totalCoins;
-                
-                // Örnek ilerleme çubuğu güncellemesi
-                var progressBar = document.querySelector('.progress');
-                var progressWidth = (totalCoins / 100) * 100; // Örnek: %100 hedef
-                progressBar.style.width = progressWidth + '%';
-                
-                alert('Başarıyla ' + earnAmount + ' coin kazandınız!');
+
+                alert('Instagram hesabımızı takip ettiğiniz için 5000 coin kazandınız!');
             } else {
-                alert('Geçerli bir coin miktarı girin!');
+                alert('Zaten Instagram hesabımızı takip ediyorsunuz!');
             }
-        }
+        });
     </script>
 </body>
 </html>
